@@ -4,12 +4,13 @@ services:
   logpy:
     image: py
     logging:
-    driver: "gelf"
-    options:
-      gelf-address: "udp://192.168.0.28:12201"
+        driver: "gelf"
+        options:
+            gelf-address: "udp://192.168.0.28:12201"
 
   lograndom:
     image: chentex/random-logger:latest
-    driver: "gelf"
-    options:
-      gelf-address: "udp://192.168.0.28:12201"
+    logging:
+        driver: "gelf"
+        options:
+            gelf-address: "udp://192.168.0.28:12201"
