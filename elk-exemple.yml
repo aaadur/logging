@@ -1,0 +1,27 @@
+version: '3.8'
+
+configs:
+  logstash-conf:
+    file: ./logstash.conf
+
+services:
+  logstash:
+    image: logstash:7.14.2
+    configs:
+      - source: logstash-conf
+        target: /config/logstash.conf
+    environment:
+      discovery.seed_hosts: logstash
+      LS_JAVA_OPTS: "-Xms512m -Xmx512m"
+    command: ["logstash", "-f", "/config/logstash.conf"]
+    ports:
+      - 12201:12201/udp
+  elasticsearch:
+    image: elasticsearch:7.14.2
+    environment:
+      discovery.type: single-node
+      ES_JAVA_OPTS: "-Xms512m -Xmx512m"
+  kibana:
+    image: kibana:7.14.2
+    ports:
+      - 5601:5601
